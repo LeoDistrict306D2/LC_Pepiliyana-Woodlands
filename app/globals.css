@@ -1,0 +1,162 @@
+@import 'tailwindcss';
+
+/*
+ * Leo Club of Pepiliyana Woodlands — "Canopy"
+ *
+ * A gallery, not a brochure. The system is built on restraint and vertical
+ * air: one thing at a time, a single centred column, and section padding
+ * roughly twice what the other clubs use. Nothing competes for attention
+ * because nothing sits beside anything else.
+ *
+ * There is no grid of cards anywhere. Projects are hung like plates on a wall,
+ * one per screen, with a small caption underneath.
+ *
+ * Token names are ROLES, not hues.
+ */
+
+@theme {
+  /* --- Surfaces ------------------------------------------------------- */
+  --color-page: #fbfaf7;
+  --color-panel: #f2f0ea;
+  --color-inverse: #1f4032;
+  --color-on-inverse: #f2f5f1;
+
+  /* --- Text ----------------------------------------------------------- */
+  --color-ink: #1a1c19;
+  --color-ink-muted: #55594f;
+  --color-ink-faint: #8b8e83;
+
+  /* --- Accents --------------------------------------------------------- */
+  /* Forest green is structural; brass is the only bright note on the site and
+     appears perhaps six times per page. Restraint is the design. */
+  --color-accent: #1f4032;
+  --color-accent-strong: #142a21;
+  --color-brass: #a98634;
+
+  /* --- Lines ----------------------------------------------------------- */
+  --color-rule: #e2e0d8;
+  --color-rule-strong: #c3c0b4;
+
+  /* --- Type ------------------------------------------------------------ */
+  --font-heading: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-body: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --text-canopy: 4.5rem;
+  --text-canopy--line-height: 1.05;
+  --text-canopy--letter-spacing: -0.02em;
+
+  --ease-drift: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 4px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-brass) 28%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Narrower than the other clubs on purpose — the air at the edges is part of
+     the design, not wasted space. */
+  .wrap {
+    width: 100%;
+    max-width: 68rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .wrap {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* A single centred column for running prose. */
+  .column {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  /* Roughly double the vertical rhythm of the other club sites. */
+  .band {
+    padding-block: 7rem;
+  }
+
+  @media (min-width: 768px) {
+    .band {
+      padding-block: 11rem;
+    }
+  }
+
+  /* The small tracked label used sparingly above headings. */
+  .label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  /* A hairline that stops short of the full width — a gallery wall marker
+     rather than a divider. */
+  .tick {
+    width: 3rem;
+    height: 1px;
+    background-color: var(--color-brass);
+  }
+
+  /*
+   * Reveal. Long and almost imperceptible: in a gallery the work should appear
+   * to have already been there.
+   */
+  .reveal {
+    transition:
+      opacity 900ms var(--ease-drift),
+      transform 900ms var(--ease-drift);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-hidden {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
